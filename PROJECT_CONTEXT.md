@@ -34,4 +34,4 @@ Portal belajar AI untuk kebutuhan umum, bukan hanya pekerjaan kreatif. Pengunjun
 
 ## Status upload GitHub
 
-Target: `https://github.com/illuminablvd/ACL-PublicDirectory`. Pada pemeriksaan terakhir repo ini kosong. Koneksi GitHub yang aktif belum diberi akses ke repo tersebut: instalasi GitHub App `168193399` hanya mencakup `illuminablvd/clio-recorder-assistant`, sehingga upaya membuat file di target ditolak dengan HTTP 403. Source dan dokumen ini masih lokal sampai repo target ditambahkan ke akses instalasi atau tersedia kredensial Git lain yang sesuai. Folder proyek lokal juga belum menjadi repo Git.
+Source, aset logo, dan dokumen konteks diunggah ke `https://github.com/illuminablvd/ACL-PublicDirectory` pada 24 November 2026 melalui koneksi GitHub App. Folder proyek lokal belum menjadi repo Git karena izin lingkungan membatasi penulisan direktori `.git`; perubahan berikutnya perlu disinkronkan secara eksplisit ke repo tersebut.
