@@ -39,6 +39,7 @@
     { title: 'Merangkai Workflow Dengan AI', topic: 'Workflow', read: 'Catatan', desc: 'Pecah pekerjaan berulang menjadi langkah yang bisa dibantu AI.', body: 'Pilih bagian kerja yang berulang, tentukan masukan dan keluaran yang jelas, lalu uji satu langkah terlebih dahulu. Simpan keputusan penting dan pemeriksaan akhir di tangan Anda.' },
     { title: 'Mengenal AI Agent', topic: 'AI Agent', read: 'Pengantar', desc: 'Pahami bagaimana agent menerima tujuan, menggunakan alat, dan memeriksa hasil.', body: 'AI agent menjalankan serangkaian langkah untuk mencapai tujuan. Berikan tugas yang terbatas, jelaskan alat yang boleh digunakan, dan minta hasil yang bisa diperiksa sebelum memperluas cakupannya.' },
   ];
+  window.portalContentCounts = { videos: videos.length, skills: skills.length, articles: articles.length };
   videos.forEach((v,i)=>v.level=i===0?'Expert':'Beginner');
   articles.forEach((a,i)=>a.level=i===2?'Intermediate':'Beginner');
   const levelLabel = level => `<span class="level-label">${level}</span>`;
