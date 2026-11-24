@@ -66,9 +66,11 @@
   }
 
   function knowledgeView() {
-    return `<section class="library-page" aria-labelledby="library-title">${pageHead('VIDEO LIBRARY', 'Knowledges', 'Belajar lewat video pilihan. Cari topik atau gunakan filter untuk menemukan yang relevan.')}
-      <div class="library-toolbar"><label class="library-search"><span class="sr-only">Cari video</span><span aria-hidden="true">⌕</span><input type="search" data-video-search placeholder="Cari video atau topik…" autocomplete="off"></label><div class="library-filters" role="group" aria-label="Filter topik">${['Semua','AI Agent','Dasar AI','Workflow','Prompting','Dampak AI'].map((x,i)=>`<button class="library-filter${i===0?' is-active':''}" type="button" data-video-filter="${esc(x)}" aria-pressed="${i===0}">${x}</button>`).join('')}</div></div>
-      ${levelFilter()}<div class="video-list" data-video-list>${videos.map(v=>`<article class="video-row" data-level="${v.level}" data-topic="${esc(v.topic)}" data-search="${esc((v.title+' '+v.topic).toLowerCase())}"><a class="video-play" style="--video-thumb:url('https://i.ytimg.com/vi/${esc(v.id)}/hqdefault.jpg')" ${external(v.href)} aria-label="Tonton ${esc(v.title)} di YouTube"><span aria-hidden="true">▶</span></a><div class="video-copy"><div class="content-labels">${topicBadge(v.topic)}${levelLabel(v.level)}</div><h2><a ${external(v.href)}>${esc(v.title)}</a></h2></div><span class="video-duration">${esc(v.duration)}</span></article>`).join('')}</div><p class="library-empty" data-video-empty hidden>Tidak ada video yang cocok. Coba kata kunci atau topik lain.</p><p class="library-note">Judul, durasi, dan tautan mengarah ke video di kanal AI Creator Labs.</p></section>`;
+    const videoTopics=['Semua',...new Set(videos.map(v=>v.topic))];
+    return `<section class="library-page knowledge-library" aria-labelledby="library-title">${pageHead('VIDEO LIBRARY', 'Knowledges', 'Belajar lewat video pilihan. Cari topik atau gunakan filter untuk menemukan yang relevan.')}
+      <nav class="library-filters knowledge-topics" aria-label="Topik video">${videoTopics.map((x,i)=>`<button class="library-filter${i===0?' is-active':''}" type="button" data-video-filter="${esc(x)}" aria-pressed="${i===0}">${esc(x)}</button>`).join('')}</nav>
+      <div class="knowledge-controls"><label class="library-search"><span class="sr-only">Cari video</span><span aria-hidden="true">⌕</span><input type="search" data-video-search placeholder="Cari video atau topik pembelajaran…" autocomplete="off"></label><label class="knowledge-sort">Urutkan dari <select data-video-sort aria-label="Urutkan video"><option value="popular">Paling Populer</option><option value="newest">Paling Baru</option></select></label></div>
+      ${levelFilter()}<div class="video-list" data-video-list>${videos.map((v,i)=>`<article class="video-row" data-order="${i}" data-level="${v.level}" data-topic="${esc(v.topic)}" data-search="${esc((v.title+' '+v.topic).toLowerCase())}"><a class="video-play" style="--video-thumb:url('https://i.ytimg.com/vi/${esc(v.id)}/hqdefault.jpg')" ${external(v.href)} aria-label="Tonton ${esc(v.title)} di YouTube"><span aria-hidden="true">▶</span></a><div class="video-copy"><h2><a ${external(v.href)}>${esc(v.title)}</a></h2><div class="content-labels">${topicBadge(v.topic)}<span class="video-duration">${esc(v.duration)}</span>${levelLabel(v.level)}</div></div></article>`).join('')}</div><p class="library-empty" data-video-empty hidden>Tidak ada video yang cocok. Coba kata kunci atau topik lain.</p><p class="library-note">Judul, durasi, dan tautan mengarah ke video di kanal AI Creator Labs.</p></section>`;
   }
 
   function articleList(active='Semua topik') {
@@ -98,11 +100,12 @@
     update();
   }
   function wireVideos(container) {
-    const params=new URLSearchParams(location.search); let topic=params.get('topic')||'Semua'; const input=container.querySelector('[data-video-search]');
+    const params=new URLSearchParams(location.search); let topic=params.get('topic')||'Semua'; const input=container.querySelector('[data-video-search]'); const sort=container.querySelector('[data-video-sort]'); const list=container.querySelector('[data-video-list]');
     container.querySelectorAll('[data-video-filter]').forEach(b=>{const on=b.dataset.videoFilter===topic;b.classList.toggle('is-active',on);b.setAttribute('aria-pressed',String(on));});
     const update=()=>{let n=0;container.querySelectorAll('.video-row').forEach(row=>{const level=container.querySelector('[data-level-filter]').value;const ok=(!level||row.dataset.level===level)&&(topic==='Semua'||row.dataset.topic===topic)&&row.dataset.search.includes(input.value.trim().toLowerCase());row.hidden=!ok;if(ok)n++;});container.querySelector('[data-video-empty]').hidden=n!==0;};
     container.querySelector('[data-level-filter]').addEventListener('change',update);
     input.addEventListener('input',update);
+    sort.addEventListener('change',()=>{[...list.children].sort((a,b)=>sort.value==='newest'?Number(b.dataset.order)-Number(a.dataset.order):Number(a.dataset.order)-Number(b.dataset.order)).forEach(row=>list.append(row));});
     container.querySelectorAll('[data-video-filter]').forEach(btn=>btn.addEventListener('click',()=>{topic=btn.dataset.videoFilter;container.querySelectorAll('[data-video-filter]').forEach(b=>{const on=b===btn;b.classList.toggle('is-active',on);b.setAttribute('aria-pressed',String(on));});update();}));
     update();
   }
