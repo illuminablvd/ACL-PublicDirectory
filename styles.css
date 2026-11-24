@@ -167,5 +167,5 @@ body:has(.hero-search:focus-within) .site-header,body:has(.hero-search:focus-wit
 @media(prefers-reduced-motion:reduce){.hero-search button:hover .button-label>span,.hero-search button:focus-visible .button-label>span,.footer-cta-button:hover .button-label>span,.footer-cta-button:focus-visible .button-label>span{transform:none}}
 
 /* Navbar labels: 2pt smaller with 2pt more tracking. */
-.site-header .main-nav a{font-size:calc(16px - 2pt)!important;letter-spacing:2pt}
+.site-header .main-nav a{font-size:calc(16px - 2pt)!important;letter-spacing:1pt}
 @media(max-width:760px){.site-header .main-nav a{font-size:calc(16px - 2pt)!important}}
