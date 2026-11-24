@@ -91,6 +91,7 @@
 .knowledge-controls .library-search input{font-size:16px}
 .knowledge-sort{display:flex;align-items:center;gap:12px;white-space:nowrap;color:#aaa4b5;font-size:14px}
 .knowledge-sort select{min-height:48px;padding:0 38px 0 18px;border:1px solid rgba(231,224,255,.22);border-radius:999px;background:#17131f;color:#f5f2fa;font:500 14px 'DM Sans',sans-serif;cursor:pointer}
+.knowledge-sort select,.level-filter select{appearance:none;-webkit-appearance:none;padding-right:48px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='m3.5 6 4.5 4.5L12.5 6' stroke='%23F5F2FA' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 18px center;background-size:16px 16px}
 .knowledge-library .level-filter{margin-bottom:24px}
 .knowledge-library .video-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:38px 22px;border:0}
 .knowledge-library .video-row{display:flex;min-width:0;flex-direction:column;align-items:stretch;gap:15px;padding:0;border:0}
