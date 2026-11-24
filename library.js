@@ -100,10 +100,11 @@
     update();
   }
   function wireVideos(container) {
-    const params=new URLSearchParams(location.search); let topic=params.get('topic')||'Semua'; const input=container.querySelector('[data-video-search]'); const sort=container.querySelector('[data-video-sort]'); const list=container.querySelector('[data-video-list]');
+    const params=new URLSearchParams(location.search); let topic=params.get('topic')||'Semua'; const input=container.querySelector('[data-video-search]'); const sort=container.querySelector('[data-video-sort]'); const list=container.querySelector('[data-video-list]'); const requestedSort=params.get('sort'); const requestedLevel=params.get('level'); if(requestedSort==='newest')sort.value='newest'; if(['Beginner','Intermediate','Expert'].includes(requestedLevel))container.querySelector('[data-level-filter]').value=requestedLevel;
     container.querySelectorAll('[data-video-filter]').forEach(b=>{const on=b.dataset.videoFilter===topic;b.classList.toggle('is-active',on);b.setAttribute('aria-pressed',String(on));});
     const update=()=>{let n=0;container.querySelectorAll('.video-row').forEach(row=>{const level=container.querySelector('[data-level-filter]').value;const ok=(!level||row.dataset.level===level)&&(topic==='Semua'||row.dataset.topic===topic)&&row.dataset.search.includes(input.value.trim().toLowerCase());row.hidden=!ok;if(ok)n++;});container.querySelector('[data-video-empty]').hidden=n!==0;};
     container.querySelector('[data-level-filter]').addEventListener('change',update);
+    if(sort.value==='newest')[...list.children].sort((a,b)=>Number(b.dataset.order)-Number(a.dataset.order)).forEach(row=>list.append(row));
     input.addEventListener('input',update);
     sort.addEventListener('change',()=>{[...list.children].sort((a,b)=>sort.value==='newest'?Number(b.dataset.order)-Number(a.dataset.order):Number(a.dataset.order)-Number(b.dataset.order)).forEach(row=>list.append(row));});
     container.querySelectorAll('[data-video-filter]').forEach(btn=>btn.addEventListener('click',()=>{topic=btn.dataset.videoFilter;container.querySelectorAll('[data-video-filter]').forEach(b=>{const on=b===btn;b.classList.toggle('is-active',on);b.setAttribute('aria-pressed',String(on));});update();}));
